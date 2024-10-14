@@ -3,31 +3,26 @@
 echo "--------------------Installing jenkins--------------------"
 sudo apt update -y
 
-sudo apt install openjdk-8-jdk -y
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+    https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+
+
+ echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+    sudo apt-get update
+  sudo apt-get install fontconfig openjdk-17-jre
+  sudo apt-get install jenkins
+
 
 java -version
+sudo systemctl status jenkins
 
-readlink -f $(which java)
-
-JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-
-echo $JAVA_HOME
-
-export JAVA_HOME
-
-sudo apt install wget 
-
-wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
-
-sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
-/etc/apt/sources.list.d/jenkins.list'
-
-sudo apt update -y 
-
-sudo apt-get install jenkins -y
 #Install docker
 echo "--------------------Installing Docker--------------------"
-sudo apt-get update -y \
+sudo apt-get update 
+sudo apt-get install \
     ca-certificates \
     curl \
     gnupg \
